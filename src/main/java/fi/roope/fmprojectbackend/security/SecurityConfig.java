@@ -43,12 +43,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/v1/auth/**").permitAll();
         http.authorizeRequests().antMatchers("/api/v1/register").permitAll();
         http.authorizeRequests().antMatchers("/api/v1/activate").permitAll();
+        http.authorizeRequests().antMatchers("/api/v1/route/public").permitAll();
         http.authorizeRequests().antMatchers(GET, "/api/v1/users").hasAnyAuthority(ADMIN);
         http.authorizeRequests().antMatchers(POST, "/api/v1/user/save/**").hasAnyAuthority(ADMIN);
-        http.authorizeRequests().antMatchers(GET, "/api/v1/route/public").hasAnyAuthority(ADMIN, ACTIVATED, VIEW);
         http.authorizeRequests().antMatchers(GET, "/api/v1/route/**").hasAnyAuthority(ADMIN, ACTIVATED); // omiin reitteihin tarvitsee olla kirjautunut ja tunnus aktiivinen
         http.authorizeRequests().antMatchers(POST, "/api/v1/route/**").hasAnyAuthority(ADMIN, ACTIVATED); // reitin luontiin tarvitsee olla kirjautunut ja tunnus aktiivinen
-        http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().anyRequest().authenticated(); // TODO: upload uusin versio tästä ja testaa kaikki auth
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface RouteRepository extends JpaRepository<Route, Long> {
     List<Route> findAllByPublicVisibilityOrderById(boolean visibility);
+    List<Route> findAllByPublicVisibilityAndDraftOrderById(boolean visibility, boolean draft);
     List<Route> findAllByCreatorOrderById(String creator);
 }

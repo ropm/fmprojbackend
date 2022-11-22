@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static fi.roope.fmprojectbackend.util.AuthUtil.ACTIVATED;
+
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
@@ -66,6 +68,8 @@ public class AppUserController {
         try {
             user.setActivationId(UUID.randomUUID());
             AppUser created = userService.saveUser(user);
+            // TODO: activation pois tästä kun aktivointi toimii
+            userService.addRoleToUser(user.getUsername(), ACTIVATED);
             UriComponents uriComponents = ServletUriComponentsBuilder
                     .fromRequest(request)
                     .replacePath("/activate")

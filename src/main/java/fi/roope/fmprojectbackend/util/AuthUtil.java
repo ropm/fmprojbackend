@@ -30,7 +30,7 @@ public class AuthUtil {
     }
 
     private static final int ACCESS_EXP = 10 * 60 * 1000;
-    private static final int REFRESH_EXP = 60 * 60 * 1000;
+    private static final int REFRESH_EXP = 8 * 60 * 60 * 1000;
 
     public static final String ADMIN = "ROLE_ADMIN";
     //private static final String CREATE = "ROLE_CREATE";

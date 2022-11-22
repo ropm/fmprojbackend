@@ -1,6 +1,7 @@
 package fi.roope.fmprojectbackend.api;
 
 import fi.roope.fmprojectbackend.model.Route;
+import fi.roope.fmprojectbackend.partialmodels.AdminPatch;
 import fi.roope.fmprojectbackend.partialmodels.LikeRoutePatch;
 import fi.roope.fmprojectbackend.partialmodels.PublicStatusPatch;
 import fi.roope.fmprojectbackend.service.RouteService;
@@ -53,6 +54,15 @@ public class RouteController {
         if (!saveOk) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok("resource public status updated");
+        return ResponseEntity.ok("resource likes updated");
+    }
+
+    @PatchMapping("/route/admin-publish/{id}")
+    public ResponseEntity<?> updateRouteDraft(@RequestBody AdminPatch partialUpdate, @PathVariable Long id) {
+        boolean saveOk = routeService.savePartialAdminDraft(partialUpdate, id);
+        if (!saveOk) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok("resource likes updated");
     }
 }
