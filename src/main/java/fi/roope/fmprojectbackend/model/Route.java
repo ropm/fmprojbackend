@@ -20,6 +20,7 @@ public class Route {
     private String description;
     private Long likes;
     private boolean isDraft;
+    private boolean published;
     private boolean publicVisibility;
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<RoutePoint> points = new ArrayList<>();

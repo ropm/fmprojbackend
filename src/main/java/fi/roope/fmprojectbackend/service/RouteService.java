@@ -45,13 +45,13 @@ public class RouteService implements IRouteService {
 
     @Override
     public List<Route> getPublicRoutes() {
-        // haetaan reitit jotka ei ole luonnoksia (admin hyväksynyt) ja ovat muuten julkisia
-        return routeRepository.findAllByPublicVisibilityAndDraftOrderById(true, false);
+        // haetaan reitit jotka on julkaistu (admin hyväksynyt) ja ovat muuten julkisia
+        return routeRepository.findAllByPublicVisibilityAndPublishedOrderById(true, true);
     }
 
     @Override
-    public List<Route> adminGetPublicDraftRoutes() {
-        // haetaan reitit, jotka näkyy kaikille (adminin pitää hyväksyä (isDraft = false))
+    public List<Route> adminGetPublicRoutes() {
+        // haetaan reitit, jotka näkyy kaikille (adminin pitää hyväksyä (published = true))
         return routeRepository.findAllByPublicVisibilityOrderById(true);
     }
 
@@ -85,10 +85,25 @@ public class RouteService implements IRouteService {
     public boolean savePartialAdminDraft(AdminPatch partialUpdate, Long id) {
         Route existingRoute = routeRepository.findById(id).orElse(null);
         if (existingRoute != null) {
-            existingRoute.setDraft(partialUpdate.isDraft());
+            existingRoute.setDraft(partialUpdate.isPublished());
             routeRepository.save(existingRoute);
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean deleteIfExists(Long id) {
+        Route existingRoute = routeRepository.findById(id).orElse(null);
+        if (existingRoute != null) {
+            routeRepository.delete(existingRoute);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void deleteAll() {
+        routeRepository.deleteAll();
     }
 }

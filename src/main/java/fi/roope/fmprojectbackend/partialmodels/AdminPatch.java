@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class AdminPatch {
     private Long id;
-    private boolean isDraft;
+    private boolean published;
 }

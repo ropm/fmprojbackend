@@ -65,4 +65,20 @@ public class RouteController {
         }
         return ResponseEntity.ok("resource likes updated");
     }
+
+    @DeleteMapping("/route/delete/{id}")
+    public ResponseEntity<?> deleteSingleRoute(@PathVariable Long id) {
+        boolean saveOk = routeService.deleteIfExists(id);
+        if (!saveOk) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok("resource deleted");
+    }
+
+    @DeleteMapping("/route/delete-all")
+    public ResponseEntity<?> deleteRoutes() {
+        // TODO: muista poistaa tämä
+        routeService.deleteAll();
+        return ResponseEntity.ok("resources deleted");
+    }
 }

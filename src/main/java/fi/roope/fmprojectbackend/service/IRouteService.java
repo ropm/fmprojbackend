@@ -11,8 +11,10 @@ public interface IRouteService {
     Route saveRoute(Route route);
     boolean savePartial(PublicStatusPatch partialUpdate, Long id);
     List<Route> getPublicRoutes();
-    List<Route> adminGetPublicDraftRoutes();
+    List<Route> adminGetPublicRoutes();
     List<Route> getOwnRoutes(String authHeader);
     boolean savePartialLikes(LikeRoutePatch partialUpdate, Long id);
     boolean savePartialAdminDraft(AdminPatch partialUpdate, Long id);
+    boolean deleteIfExists(Long id);
+    void deleteAll();
 }

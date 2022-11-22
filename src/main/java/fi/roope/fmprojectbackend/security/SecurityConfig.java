@@ -17,8 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static fi.roope.fmprojectbackend.util.AuthUtil.*;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity
@@ -48,7 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(POST, "/api/v1/user/save/**").hasAnyAuthority(ADMIN);
         http.authorizeRequests().antMatchers(GET, "/api/v1/route/**").hasAnyAuthority(ADMIN, ACTIVATED); // omiin reitteihin tarvitsee olla kirjautunut ja tunnus aktiivinen
         http.authorizeRequests().antMatchers(POST, "/api/v1/route/**").hasAnyAuthority(ADMIN, ACTIVATED); // reitin luontiin tarvitsee olla kirjautunut ja tunnus aktiivinen
-        http.authorizeRequests().anyRequest().authenticated(); // TODO: upload uusin versio tästä ja testaa kaikki auth
+        //http.authorizeRequests().antMatchers(DELETE, "/api/v1/route/**").permitAll();
+        http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
