@@ -4,6 +4,7 @@ import fi.roope.fmprojectbackend.model.Route;
 import fi.roope.fmprojectbackend.partialmodels.AdminPatch;
 import fi.roope.fmprojectbackend.partialmodels.LikeRoutePatch;
 import fi.roope.fmprojectbackend.partialmodels.PublicStatusPatch;
+import fi.roope.fmprojectbackend.partialmodels.RoutePatch;
 import fi.roope.fmprojectbackend.service.RouteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,11 @@ public class RouteController {
         return ResponseEntity.ok(routeService.getPublicRoutes());
     }
 
+    @GetMapping("/route/admin")
+    public ResponseEntity<List<Route>> getPublicAdminRoutes() {
+        return ResponseEntity.ok(routeService.adminGetPublicRoutes());
+    }
+
     @GetMapping("/route")
     public ResponseEntity<List<Route>> getOwnRoutes(HttpServletRequest request) {
         String authHeader = request.getHeader(AUTHORIZATION);
@@ -39,13 +45,31 @@ public class RouteController {
         return ResponseEntity.created(uri).body(routeService.saveRoute(route));
     }
 
-    @PatchMapping("/route/{id}")
+    @PatchMapping("/route/public-status/{id}")
     public ResponseEntity<?> updateRoutePublicStatus(@RequestBody PublicStatusPatch partialUpdate, @PathVariable Long id) {
         boolean saveOk = routeService.savePartial(partialUpdate, id);
         if (!saveOk) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok("resource public status updated");
+    }
+
+    @PatchMapping("/route/{id}")
+    public ResponseEntity<?> updateRouteMetaData(@RequestBody RoutePatch partialUpdate, @PathVariable Long id) {
+        boolean saveOk = routeService.savePartialMeta(partialUpdate, id);
+        if (!saveOk) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok("resource meta updated");
+    }
+
+    @PatchMapping("/point/{id}")
+    public ResponseEntity<?> updatePointMetaData(@RequestBody RoutePatch partialUpdate, @PathVariable Long id) {
+        boolean saveOk = routeService.savePartialPoint(partialUpdate, id);
+        if (!saveOk) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok("resource meta updated");
     }
 
     @PatchMapping("/route/like/{id}")
@@ -63,7 +87,7 @@ public class RouteController {
         if (!saveOk) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok("resource likes updated");
+        return ResponseEntity.ok("resource updated");
     }
 
     @DeleteMapping("/route/delete/{id}")

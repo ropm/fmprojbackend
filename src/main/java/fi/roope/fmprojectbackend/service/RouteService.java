@@ -5,6 +5,7 @@ import fi.roope.fmprojectbackend.model.RoutePoint;
 import fi.roope.fmprojectbackend.partialmodels.AdminPatch;
 import fi.roope.fmprojectbackend.partialmodels.LikeRoutePatch;
 import fi.roope.fmprojectbackend.partialmodels.PublicStatusPatch;
+import fi.roope.fmprojectbackend.partialmodels.RoutePatch;
 import fi.roope.fmprojectbackend.repository.RoutePointRepository;
 import fi.roope.fmprojectbackend.repository.RouteRepository;
 import fi.roope.fmprojectbackend.util.AuthUtil;
@@ -38,6 +39,30 @@ public class RouteService implements IRouteService {
         if (existingRoute != null) {
             existingRoute.setPublicVisibility(partialUpdate.isPublicVisibility());
             routeRepository.save(existingRoute);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean savePartialMeta(RoutePatch partialUpdate, Long id) {
+        Route existingRoute = routeRepository.findById(id).orElse(null);
+        if (existingRoute != null) {
+            existingRoute.setName(partialUpdate.getName());
+            existingRoute.setDescription(partialUpdate.getDescription());
+            routeRepository.save(existingRoute);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean savePartialPoint(RoutePatch partialUpdate, Long id) {
+        RoutePoint existingPoint = routePointRepository.findById(id).orElse(null);
+        if (existingPoint != null) {
+            existingPoint.setName(partialUpdate.getName());
+            existingPoint.setDescription(partialUpdate.getDescription());
+            routePointRepository.save(existingPoint);
             return true;
         }
         return false;
@@ -85,7 +110,7 @@ public class RouteService implements IRouteService {
     public boolean savePartialAdminDraft(AdminPatch partialUpdate, Long id) {
         Route existingRoute = routeRepository.findById(id).orElse(null);
         if (existingRoute != null) {
-            existingRoute.setDraft(partialUpdate.isPublished());
+            existingRoute.setPublished(partialUpdate.isPublished());
             routeRepository.save(existingRoute);
             return true;
         }

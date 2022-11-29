@@ -36,11 +36,13 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         var access = AuthUtil.createAccessToken(request, authResult);
         var refresh = AuthUtil.createRefreshToken(request, authResult);
+        var isAdmin = AuthUtil.isUserAdmin(authResult);
 
         Map<String, String> tokens = new HashMap<>();
         tokens.put("access", access);
         tokens.put("refresh", refresh);
         tokens.put("user", request.getParameter("username"));
+        tokens.put("admin", isAdmin ? "1" : "0");
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
     }

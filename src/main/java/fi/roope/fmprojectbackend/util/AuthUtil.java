@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -43,6 +44,11 @@ public class AuthUtil {
 
     public static Algorithm getAlgorithm() {
         return Algorithm.HMAC256("secret".getBytes(StandardCharsets.UTF_8));
+    }
+
+    public static boolean isUserAdmin(Authentication authResult) {
+        var springUser = getSpringUser(authResult);
+        return springUser.getAuthorities().stream().anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(ADMIN));
     }
 
     public static String createAccessToken(HttpServletRequest request, Authentication authResult) {
