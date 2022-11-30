@@ -46,15 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/v1/user/save/**").hasAnyAuthority(ADMIN);
         http.authorizeRequests().antMatchers("/api/v1/role/**").hasAnyAuthority(ADMIN);
         http.authorizeRequests().antMatchers(GET, "/api/v1/users").hasAnyAuthority(ADMIN);
-        http.authorizeRequests().antMatchers(GET, "/api/v1/route").hasAnyAuthority(ADMIN, ACTIVATED);
-        http.authorizeRequests().antMatchers(POST, "/api/v1/route").hasAnyAuthority(ADMIN, ACTIVATED);
-        http.authorizeRequests().antMatchers(GET, "/api/v1/route/**").hasAnyAuthority(ADMIN, ACTIVATED);
-        http.authorizeRequests().antMatchers(POST, "/api/v1/route/**").hasAnyAuthority(ADMIN, ACTIVATED);
-        http.authorizeRequests().antMatchers(PATCH, "/api/v1/route/**").hasAnyAuthority(ADMIN, ACTIVATED);
-        http.authorizeRequests().antMatchers(DELETE, "/api/v1/route/delete/**").hasAnyAuthority(ADMIN, ACTIVATED);
-        http.authorizeRequests().antMatchers(PATCH, "/api/v1/point/**").hasAnyAuthority(ADMIN, ACTIVATED);
-        http.authorizeRequests().antMatchers(DELETE, "/api/v1/route/delete/**").hasAnyAuthority(ADMIN, ACTIVATED);
-        http.authorizeRequests().antMatchers(POST, "/api/v1/route/admin").hasAnyAuthority(ADMIN);
+        http.authorizeRequests().antMatchers("/api/v1/route/admin").hasAnyAuthority(ADMIN);
         http.authorizeRequests().antMatchers(PATCH, "/api/v1/route/admin-publish/**").hasAnyAuthority(ADMIN);
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
