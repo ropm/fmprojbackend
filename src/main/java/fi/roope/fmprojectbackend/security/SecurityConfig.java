@@ -50,6 +50,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(POST, "/api/v1/route").hasAnyAuthority(ADMIN, ACTIVATED);
         http.authorizeRequests().antMatchers(GET, "/api/v1/route/**").hasAnyAuthority(ADMIN, ACTIVATED);
         http.authorizeRequests().antMatchers(POST, "/api/v1/route/**").hasAnyAuthority(ADMIN, ACTIVATED);
+        http.authorizeRequests().antMatchers(PATCH, "/api/v1/route/**").hasAnyAuthority(ADMIN, ACTIVATED);
+        http.authorizeRequests().antMatchers(DELETE, "/api/v1/route/delete/**").hasAnyAuthority(ADMIN, ACTIVATED);
+        http.authorizeRequests().antMatchers(PATCH, "/api/v1/point/**").hasAnyAuthority(ADMIN, ACTIVATED);
+        http.authorizeRequests().antMatchers(DELETE, "/api/v1/route/delete/**").hasAnyAuthority(ADMIN, ACTIVATED);
+        http.authorizeRequests().antMatchers(POST, "/api/v1/route/admin").hasAnyAuthority(ADMIN);
+        http.authorizeRequests().antMatchers(PATCH, "/api/v1/route/admin-publish/**").hasAnyAuthority(ADMIN);
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
