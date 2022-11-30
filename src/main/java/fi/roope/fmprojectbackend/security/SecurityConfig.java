@@ -43,14 +43,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/v1/register").permitAll();
         http.authorizeRequests().antMatchers("/api/v1/activate").permitAll();
         http.authorizeRequests().antMatchers("/api/v1/route/public").permitAll();
-        //TODO: muista poistaa nämä kun admin tunnus luotu
-        http.authorizeRequests().antMatchers("/api/v1/user/save/**").permitAll();
-        http.authorizeRequests().antMatchers("/api/v1/role/**").permitAll();
-        //http.authorizeRequests().antMatchers(POST, "/api/v1/user/save/**").hasAnyAuthority(ADMIN);
-
+        http.authorizeRequests().antMatchers("/api/v1/user/save/**").hasAnyAuthority(ADMIN);
+        http.authorizeRequests().antMatchers("/api/v1/role/**").hasAnyAuthority(ADMIN);
         http.authorizeRequests().antMatchers(GET, "/api/v1/users").hasAnyAuthority(ADMIN);
-        http.authorizeRequests().antMatchers(GET, "/api/v1/route/**").hasAnyAuthority(ADMIN, ACTIVATED); // omiin reitteihin tarvitsee olla kirjautunut ja tunnus aktiivinen
-        http.authorizeRequests().antMatchers(POST, "/api/v1/route/**").hasAnyAuthority(ADMIN, ACTIVATED); // reitin luontiin tarvitsee olla kirjautunut ja tunnus aktiivinen
+        http.authorizeRequests().antMatchers(GET, "/api/v1/route").hasAnyAuthority(ADMIN, ACTIVATED);
+        http.authorizeRequests().antMatchers(POST, "/api/v1/route").hasAnyAuthority(ADMIN, ACTIVATED);
+        http.authorizeRequests().antMatchers(GET, "/api/v1/route/**").hasAnyAuthority(ADMIN, ACTIVATED);
+        http.authorizeRequests().antMatchers(POST, "/api/v1/route/**").hasAnyAuthority(ADMIN, ACTIVATED);
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
