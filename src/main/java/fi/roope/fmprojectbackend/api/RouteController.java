@@ -98,11 +98,4 @@ public class RouteController {
         }
         return ResponseEntity.ok("resource deleted");
     }
-
-    @DeleteMapping("/route/delete-all")
-    public ResponseEntity<?> deleteRoutes() {
-        // TODO: muista poistaa tämä
-        routeService.deleteAll();
-        return ResponseEntity.ok("resources deleted");
-    }
 }
