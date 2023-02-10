@@ -1,6 +1,6 @@
 # Hautausmaakierros-backend 
 
-Projekti on tehty syventävien opintojen harjoitustyönä. Backendin lisäksi on olemassa frontend sovellus (github link).
+Projekti on tehty syventävien opintojen harjoitustyönä. Backendin lisäksi on olemassa frontend sovellus (https://github.com/ropm/fmproj).
 
 ## Backendin kuvaus:
 - spring boot (hibernate)
